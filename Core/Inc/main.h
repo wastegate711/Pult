@@ -60,8 +60,6 @@ void Error_Handler(void);
 #define BattonInkas_Pin GPIO_PIN_2
 #define BattonInkas_GPIO_Port GPIOE
 #define BattonInkas_EXTI_IRQn EXTI2_IRQn
-#define CardReaderPower_Pin GPIO_PIN_2
-#define CardReaderPower_GPIO_Port GPIOB
 #define LedStop_Pin GPIO_PIN_8
 #define LedStop_GPIO_Port GPIOE
 #define LedOsmos_Pin GPIO_PIN_9
