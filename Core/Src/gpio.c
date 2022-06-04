@@ -37,6 +37,7 @@ bool buttonCoolWaterFlag = false;
 bool buttonVoskFlag = false;
 bool buttonOsmosFlag = false;
 bool buttonStopFlag = false;
+bool buttonInkasFlag = false;
 /* USER CODE END 1 */
 
 /** Configure pins as
@@ -154,6 +155,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         case ButtonOsmos_Pin:
             buttonOsmosFlag = true;
             break;
+        case ButtonInkas_Pin:
+            buttonInkasFlag = true;
+            break;
         default:
             break;
     }
@@ -242,6 +246,7 @@ void SetBacklightButtonOsmos(GPIO_PinState state)
     else if(state == GPIO_PIN_RESET)
         HAL_GPIO_WritePin(LedOsmos_GPIO_Port, LedOsmos_Pin, GPIO_PIN_RESET);
 }
+
 /**
  * Управляет подсветкой кнопки Стоп
  * @param state SET/RESET Включено/Выключено
