@@ -39,7 +39,7 @@ extern "C" {
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void Cs_Rs485_Usart1(GPIO_PinState state);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
