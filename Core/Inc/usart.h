@@ -29,19 +29,22 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include <stdbool.h>
+#include "cmsis_os2.h"
+#include "GlobalSettings.h"
+#include "gpio.h"
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN Private defines */
-
+#define BUF_LEN     255
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+HAL_StatusTypeDef SendDataUsart1(uint8_t *pData, uint16_t size);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -58,10 +58,10 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(Usart1_CS_RS485_GPIO_Port, Usart1_CS_RS485_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = BattonInkas_Pin;
+  GPIO_InitStruct.Pin = ButtonInkas_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(BattonInkas_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(ButtonInkas_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PEPin PEPin PEPin PEPin
                            PEPin PEPin PEPin PEPin */
@@ -106,5 +106,12 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-
+/**
+ * Управление выводом управляющим режимом работы микросхемы RS-485
+ * @param state Статус SET-передача RESET-прием
+ */
+void Cs_Rs485_Usart1(GPIO_PinState state)
+{
+    HAL_GPIO_WritePin(Usart1_CS_RS485_GPIO_Port, Usart1_CS_RS485_Pin, state);
+}
 /* USER CODE END 2 */

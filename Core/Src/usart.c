@@ -21,7 +21,10 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
+uint8_t tx_usart1_data[BUF_LEN];
+uint8_t rx_usart1_data[BUF_LEN];
+bool transmitComplete = false;
+bool errorTransmit = false;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -115,5 +118,54 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if(huart == &huart1)
+    {
+        transmitComplete = true;
+    }
+}
 
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if(huart == &huart1)
+    {
+        HAL_UART_Receive_IT(&huart1, rx_usart1_data, RECEIV_LEN);
+    }
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+    if(huart == &huart1)
+    {
+        errorTransmit = true;
+        HAL_UART_Receive_IT(&huart1, rx_usart1_data, RECEIV_LEN);
+    }
+}
+
+void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart)
+{
+    if(huart == &huart1)
+    {
+
+    }
+}
+/**
+ * Передает данные через USART1 и управляет передачей приемом RS485
+ * @param pData массив с данными для передачи
+ * @param size количество байт для передачи
+ * @return Вернет результат передачи данных
+ */
+HAL_StatusTypeDef SendDataUsart1(uint8_t *pData, uint16_t size)
+{
+    HAL_StatusTypeDef result;
+    Cs_Rs485_Usart1(GPIO_PIN_SET);
+    osDelay(5);
+    result = HAL_UART_Transmit_IT(&huart1, pData, size);
+    //while(transmitComplete || errorTransmit);
+    osDelay(5);
+    Cs_Rs485_Usart1(GPIO_PIN_RESET);
+
+    return result;
+}
 /* USER CODE END 1 */
