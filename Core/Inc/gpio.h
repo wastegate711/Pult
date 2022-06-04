@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
@@ -40,10 +40,18 @@ void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void Cs_Rs485_Usart1(GPIO_PinState state);
+void SetBacklightButtonInsect(GPIO_PinState state);
+void SetBacklightButtonFoam(GPIO_PinState state);
+void SetBacklightButtonFoamWater(GPIO_PinState state);
+void SetBacklightButtonHotWater(GPIO_PinState state);
+void SetBacklightCoolWater(GPIO_PinState state);
+void SetBacklightButtonVosk(GPIO_PinState state);
+void SetBacklightButtonOsmos(GPIO_PinState state);
+void SetBacklightButtonStop(GPIO_PinState state);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ GPIO_H__ */
+#endif /*__GPIO_H__ */
 
