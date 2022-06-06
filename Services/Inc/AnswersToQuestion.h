@@ -5,7 +5,17 @@
 #include "GlobalSettings.h"
 #include "usart.h"
 #include "Crc16.h"
+#include "gpio.h"
 
 void GetStatus(void);
+void GetUID(void);
+void SetStateBacklightButtonStop(uint8_t state);
+void SetStateBacklightButtonOsmos(uint8_t state);
+void SetStateBacklightButtonVosk(uint8_t state);
+void SetStateBacklightButtonCoolWater(uint8_t state);
+void SetStateBacklightButtonHotWater(uint8_t state);
+void SetStateBacklightButtonFoamWater(uint8_t state);
+void SetStateBacklightButtonFoam(uint8_t state);
+void SetStateBacklightButtonInsect(uint8_t state);
 
 #endif //PULT_ANSWERTOQUESTION_H
