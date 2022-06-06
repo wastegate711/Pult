@@ -25,5 +25,6 @@
 #define SET_BACKLIGHT_BUTTON_STOP       0x0A // включение/выключение подсветки кнопки Стоп
 #define PUSH_BUTTON_FUNCTIONS           0x0B // Нажата кнопка выбора программы (воск, осмос, пена и др.)
 #define PUSH_BUTTON_COLLECTION          0x0C // Нажата кнопка Инкассация
+#define SET_DISPLAY_NUMBER              0x0D // Установка значения на дисплее
 
 #endif //PULT_GLOBALSETTINGS_H

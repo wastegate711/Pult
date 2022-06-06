@@ -1,6 +1,7 @@
 #include "SortingRequests.h"
 
 extern uint8_t tx_usart1_data[BUF_LEN];
+extern uint32_t displayCount;
 
 /**
  * Функция производит сортировку входящих запросов.
@@ -39,6 +40,9 @@ void IncomingRequest(const uint8_t *data)
             break;
         case SET_BACKLIGHT_BUTTON_STOP: //установка подсветки кнопки Стоп
             SetStateBacklightButtonStop(data[4]);
+            break;
+        case SET_DISPLAY_NUMBER: // установка значения на дисплее
+            SetDisplayNumber(data);
             break;
     }
 }

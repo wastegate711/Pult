@@ -50,66 +50,69 @@ bool buttonInkasFlag = false;
 void MX_GPIO_Init(void)
 {
 
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    /* GPIO Ports Clock Enable */
-    __HAL_RCC_GPIOE_CLK_ENABLE();
-    __HAL_RCC_GPIOD_CLK_ENABLE();
-    __HAL_RCC_GPIOC_CLK_ENABLE();
-    __HAL_RCC_GPIOA_CLK_ENABLE();
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
 
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOE, LedStop_Pin | LedOsmos_Pin | LedVosk_Pin | LedInsect_Pin
-                             | LedFoam_Pin | LedFoamWater_Pin | LedHotWater_Pin | LedCoolWater_Pin, GPIO_PIN_RESET);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(CS_SPI1_GPIO_Port, CS_SPI1_Pin, GPIO_PIN_SET);
 
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(Usart1_CS_RS485_GPIO_Port, Usart1_CS_RS485_Pin, GPIO_PIN_RESET);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOE, LedStop_Pin|LedOsmos_Pin|LedVosk_Pin|LedInsect_Pin
+                          |LedFoam_Pin|LedFoamWater_Pin|LedHotWater_Pin|LedCoolWater_Pin, GPIO_PIN_RESET);
 
-    /*Configure GPIO pin : PtPin */
-    GPIO_InitStruct.Pin = ButtonInkas_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(ButtonInkas_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(Usart1_CS_RS485_GPIO_Port, Usart1_CS_RS485_Pin, GPIO_PIN_RESET);
 
-    /*Configure GPIO pins : PEPin PEPin PEPin PEPin
-                             PEPin PEPin PEPin PEPin */
-    GPIO_InitStruct.Pin = LedStop_Pin | LedOsmos_Pin | LedVosk_Pin | LedInsect_Pin
-                          | LedFoam_Pin | LedFoamWater_Pin | LedHotWater_Pin | LedCoolWater_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = ButtonInkas_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(ButtonInkas_GPIO_Port, &GPIO_InitStruct);
 
-    /*Configure GPIO pins : PDPin PDPin PDPin PDPin
-                             PDPin PDPin */
-    GPIO_InitStruct.Pin = ButtonOsmos_Pin | ButtonStop_Pin | ButtonVosk_Pin | ButtonInsect_Pin
-                          | ButtonFoam_Pin | ButtonFoamWater_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  /*Configure GPIO pins : PAPin PAPin */
+  GPIO_InitStruct.Pin = CS_SPI1_Pin|Usart1_CS_RS485_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    /*Configure GPIO pins : PCPin PCPin */
-    GPIO_InitStruct.Pin = ButtonCoolWater_Pin | ButtonHotWater_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  /*Configure GPIO pins : PEPin PEPin PEPin PEPin
+                           PEPin PEPin PEPin PEPin */
+  GPIO_InitStruct.Pin = LedStop_Pin|LedOsmos_Pin|LedVosk_Pin|LedInsect_Pin
+                          |LedFoam_Pin|LedFoamWater_Pin|LedHotWater_Pin|LedCoolWater_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    /*Configure GPIO pin : PtPin */
-    GPIO_InitStruct.Pin = Usart1_CS_RS485_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    HAL_GPIO_Init(Usart1_CS_RS485_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pins : PDPin PDPin PDPin PDPin
+                           PDPin PDPin */
+  GPIO_InitStruct.Pin = ButtonOsmos_Pin|ButtonStop_Pin|ButtonVosk_Pin|ButtonInsect_Pin
+                          |ButtonFoam_Pin|ButtonFoamWater_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-    /* EXTI interrupt init*/
-    HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+  /*Configure GPIO pins : PCPin PCPin */
+  GPIO_InitStruct.Pin = ButtonCoolWater_Pin|ButtonHotWater_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-    HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
@@ -121,6 +124,15 @@ void MX_GPIO_Init(void)
 void Cs_Rs485_Usart1(GPIO_PinState state)
 {
     HAL_GPIO_WritePin(Usart1_CS_RS485_GPIO_Port, Usart1_CS_RS485_Pin, state);
+}
+
+/**
+ * Чип селект SPI1 для работы с дисплеем
+ * @param state RESET-включен/SET-выключен
+ */
+void Cs_SPI1(GPIO_PinState state)
+{
+    HAL_GPIO_WritePin(CS_SPI1_GPIO_Port, CS_SPI1_Pin, state);
 }
 
 /**
@@ -259,20 +271,3 @@ void SetBacklightButtonStop(GPIO_PinState state)
         HAL_GPIO_WritePin(LedStop_GPIO_Port, LedStop_Pin, GPIO_PIN_RESET);
 }
 /* USER CODE END 2 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
