@@ -6,6 +6,7 @@
 #include "usart.h"
 #include "Crc16.h"
 #include "gpio.h"
+#include "Flash.h"
 
 void GetStatus(void);
 void GetUID(void);

@@ -38,9 +38,29 @@ void GetStatus(void)
  */
 void GetUID(void)
 {
-    uint32_t serialNumberPart1;
-    uint32_t serialNumberPart2;
-    uint32_t serialNumberPart3;
+    uint32_t serialNumberPart1 = ReadFlash(UID_BASE_ADDRESS);
+    uint32_t serialNumberPart2 = ReadFlash(UID_BASE_ADDRESS + 4);
+    uint32_t serialNumberPart3 = ReadFlash(UID_BASE_ADDRESS + 8);
+
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_UID;
+    tx_usart1_data[3] = 0x12;
+    tx_usart1_data[4] = serialNumberPart1 >> 24;
+    tx_usart1_data[5] = serialNumberPart1 >> 16;
+    tx_usart1_data[6] = serialNumberPart1 >> 8;
+    tx_usart1_data[7] = serialNumberPart1;
+    tx_usart1_data[8] = serialNumberPart2 >> 24;
+    tx_usart1_data[9] = serialNumberPart2 >> 16;
+    tx_usart1_data[10] = serialNumberPart2 >> 8;
+    tx_usart1_data[11] = serialNumberPart2;
+    tx_usart1_data[12] = serialNumberPart3 >> 24;
+    tx_usart1_data[13] = serialNumberPart3 >> 16;
+    tx_usart1_data[14] = serialNumberPart3 >> 8;
+    tx_usart1_data[15] = serialNumberPart3;
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[3] - 2);
+    tx_usart1_data[16] = crc >> 8;
+    tx_usart1_data[17] = crc;
 }
 
 /**

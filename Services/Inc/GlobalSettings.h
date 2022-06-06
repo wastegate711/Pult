@@ -10,6 +10,7 @@
 
 // Настройки.
 #define RECEIV_LEN   255 //максимальная длина принимаемой посылки.
+#define UID_BASE_ADDRESS        0x1FFF7A10 //Начальный адрес UID
 
 // Команды
 #define GET_STATUS                      0x01 // запрос текущего состояния
