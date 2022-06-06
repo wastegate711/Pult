@@ -158,3 +158,19 @@ void SetStateBacklightButtonStop(uint8_t state)
     else if(state == 0x00)
         SetBacklightButtonStop(GPIO_PIN_RESET);
 }
+
+/**
+ * Принимает от ведищего данные и устанавливает значение на дисплее.
+ * @param pData
+ */
+void SetDisplayNumber(const uint8_t *pData)
+{
+    uint32_t number = pData[4];
+    number << 8;
+    number = pData[5];
+    number << 8;
+    number = pData[6];
+    number << 8;
+    number = pData[7];
+    DisplayNumber(number);
+}

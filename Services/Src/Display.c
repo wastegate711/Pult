@@ -1,6 +1,7 @@
 #include "Display.h"
 
 uint8_t aData[2] = {0};
+uint32_t displayCount; // содержит число отображаемое на дисплее
 
 void DisplaySendData(uint8_t reg, uint8_t data);
 
@@ -29,7 +30,7 @@ void DisplayInit(void)
  * Разделает целое число по сегментам дисплея
  * @param number Число которое нужно вывести на дисплей
  */
-void display_number(volatile unsigned long number)
+void DisplayNumber(volatile uint32_t number)
 {
     DisplaySendData(8, number / 10000000);
     DisplaySendData(7, (number / 1000000) % 10);

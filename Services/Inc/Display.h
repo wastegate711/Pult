@@ -33,6 +33,6 @@
 #define OP_DISPLAYTEST 15
 
 void DisplayInit(void);
-void display_number(unsigned long number);
+void DisplayNumber(volatile uint32_t number);
 
 #endif //PULT_DISPLAY_H
