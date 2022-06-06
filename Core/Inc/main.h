@@ -59,7 +59,9 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define ButtonInkas_Pin GPIO_PIN_2
 #define ButtonInkas_GPIO_Port GPIOE
-#define BattonInkas_EXTI_IRQn EXTI2_IRQn
+#define ButtonInkas_EXTI_IRQn EXTI2_IRQn
+#define CS_SPI1_Pin GPIO_PIN_4
+#define CS_SPI1_GPIO_Port GPIOA
 #define LedStop_Pin GPIO_PIN_8
 #define LedStop_GPIO_Port GPIOE
 #define LedOsmos_Pin GPIO_PIN_9

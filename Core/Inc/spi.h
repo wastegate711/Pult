@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    gpio.h
+  * @file    spi.h
   * @brief   This file contains all the function prototypes for
-  *          the gpio.c file
+  *          the spi.c file
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GPIO_H__
-#define __GPIO_H__
+#ifndef __SPI_H__
+#define __SPI_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,30 +29,24 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-#include <stdbool.h>
+
 /* USER CODE END Includes */
+
+extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_GPIO_Init(void);
+void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void Cs_Rs485_Usart1(GPIO_PinState state);
-void SetBacklightButtonInsect(GPIO_PinState state);
-void SetBacklightButtonFoam(GPIO_PinState state);
-void SetBacklightButtonFoamWater(GPIO_PinState state);
-void SetBacklightButtonHotWater(GPIO_PinState state);
-void SetBacklightCoolWater(GPIO_PinState state);
-void SetBacklightButtonVosk(GPIO_PinState state);
-void SetBacklightButtonOsmos(GPIO_PinState state);
-void SetBacklightButtonStop(GPIO_PinState state);
-void Cs_SPI1(GPIO_PinState state);
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ GPIO_H__ */
+
+#endif /* __SPI_H__ */
 
