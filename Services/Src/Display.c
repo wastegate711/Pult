@@ -51,8 +51,21 @@ void DisplaySendData(uint8_t reg, uint8_t data)
 {
     Cs_SPI1(GPIO_PIN_RESET);
     aData[0] = reg;
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)aData, 1, 0xFFFFFFFF);
+    HAL_SPI_Transmit(&hspi1, (uint8_t *)aData, 1, 0xFFFFFFFF);
     aData[0] = data;
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)aData, 1, 0xFFFFFFFF);
+    HAL_SPI_Transmit(&hspi1, (uint8_t *)aData, 1, 0xFFFFFFFF);
     Cs_SPI1(GPIO_PIN_SET);
+}
+
+/**
+ * Конвертирует число из шестнацатеричной системы в десятичную
+ * @param pDAta Массив из которого необходимо взять числа
+ * @return Число в десятичной системе
+ */
+uint32_t ConvertDigits(const uint8_t *pDAta)
+{
+    uint16_t part1 = 256;
+    uint32_t result = part1 * pDAta[4] + pDAta[5];
+
+    return result;
 }

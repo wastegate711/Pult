@@ -1,5 +1,7 @@
 #include "AnswersToQuestion.h"
 
+uint8_t GetStatePeripheral(void);
+
 extern uint8_t tx_usart1_data[BUF_LEN];
 //флаги монетоприемника
 extern bool jettonChanel_1;
@@ -35,7 +37,7 @@ void GetStatus(void)
 {
     tx_usart1_data[0] = MASTER_ADDRESS;
     tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
-    tx_usart1_data[2] = GET_STATUS;
+    tx_usart1_data[2] = GetStatePeripheral();
     tx_usart1_data[3] = 0x08;
     tx_usart1_data[4] = 0x00;
     tx_usart1_data[5] = 0x00;
@@ -188,6 +190,10 @@ void SetDisplayNumber(const uint8_t *pData)
     DisplayNumber(number);
 }
 
+/**
+ * Проверяет установленые флаги и вернет код команды для отправки ведущему
+ * @return Код команды
+ */
 uint8_t GetStatePeripheral(void)
 {
     // Проверка в какой канал жетоноприемка был проброшен жетон
