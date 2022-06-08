@@ -14,10 +14,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v2
+    - name: arm-none-eabi-gcc
+    - uses: fiam/arm-none-eabi-gcc@v1
       with:
-       platform: x64
+       release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
+    
+   # - name: Set up MinGW
+   #   uses: egor-tensin/setup-mingw@v2
+   #   with:
+   #    platform: x64
        
     - name: Build & Test
       uses: ashutoshvarma/action-cmake-build@master
