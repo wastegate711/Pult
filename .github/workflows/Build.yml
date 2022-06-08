@@ -20,7 +20,6 @@ jobs:
           release: '9-2019-q4'
   
     - name: Build Firmware
-      working-directory: ./buid
       run: make
       
     - name: Upload ELF
