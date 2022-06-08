@@ -1,7 +1,22 @@
 #include "AnswersToQuestion.h"
 
-extern uint8_t tx_usart1_data[BUF_LEN];
+uint8_t GetStatePeripheral(void);
 
+extern uint8_t tx_usart1_data[BUF_LEN];
+//флаги монетоприемника
+extern bool jettonChanel_1;
+extern bool jettonChanel_2;
+extern bool jettonChanel_3;
+//флаги нажатий кнопок
+extern bool buttonInsectFlag;
+extern bool buttonFoamFlag;
+extern bool buttonFoamWaterFlag;
+extern bool buttonHotWaterFlag;
+extern bool buttonCoolWaterFlag;
+extern bool buttonVoskFlag;
+extern bool buttonOsmosFlag;
+extern bool buttonStopFlag;
+extern bool buttonInkasFlag;
 uint16_t crc;
 
 /*
@@ -22,7 +37,7 @@ void GetStatus(void)
 {
     tx_usart1_data[0] = MASTER_ADDRESS;
     tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
-    tx_usart1_data[2] = GET_STATUS;
+    tx_usart1_data[2] = GetStatePeripheral();
     tx_usart1_data[3] = 0x08;
     tx_usart1_data[4] = 0x00;
     tx_usart1_data[5] = 0x00;
@@ -173,4 +188,63 @@ void SetDisplayNumber(const uint8_t *pData)
     number << 8;
     number = pData[7];
     DisplayNumber(number);
+}
+
+/**
+ * Проверяет установленые флаги и вернет код команды для отправки ведущему
+ * @return Код команды
+ */
+uint8_t GetStatePeripheral(void)
+{
+    // Проверка в какой канал жетоноприемка был проброшен жетон
+    if(jettonChanel_1)
+    {
+        jettonChanel_1 = false;
+        return PUSH_JETTON_CHANNEL_1;
+    } else if(jettonChanel_2)
+    {
+        jettonChanel_2 = false;
+        return PUSH_JETTON_CHANNEL_2;
+    } else if(jettonChanel_3)
+    {
+        jettonChanel_3 = false;
+        return PUSH_JETTON_CHANNEL_3;
+    }
+
+    // Проверка какая кнопка была нажата
+    if(buttonInsectFlag)
+    {
+        buttonInsectFlag = false;
+        return PUSH_BUTTON_INSECT;
+    } else if(buttonFoamFlag)
+    {
+        buttonFoamFlag=false;
+        return PUSH_BUTTON_FOAM;
+    } else if(buttonFoamWaterFlag)
+    {
+        buttonFoamWaterFlag=false;
+        return PUSH_BUTTON_FOAM_WATER;
+    } else if(buttonHotWaterFlag)
+    {
+        buttonHotWaterFlag=false;
+        return PUSH_BUTTON_HOT_WATER;
+    } else if(buttonCoolWaterFlag)
+    {
+        buttonCoolWaterFlag=false;
+        return PUSH_BUTTON_COOL_WATER;
+    } else if(buttonVoskFlag)
+    {
+        buttonVoskFlag=false;
+        return PUSH_BUTTON_VOSK;
+    } else if(buttonOsmosFlag)
+    {
+        buttonOsmosFlag=false;
+        return PUSH_BUTTON_OSMOS;
+    } else if(buttonStopFlag)
+    {
+        buttonStopFlag=false;
+        return PUSH_BUTTON_STOP;
+    }
+
+    return GET_STATUS;
 }

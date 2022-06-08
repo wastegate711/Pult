@@ -34,5 +34,6 @@
 
 void DisplayInit(void);
 void DisplayNumber(volatile uint32_t number);
+uint32_t ConvertDigits(const uint8_t *pDAta);
 
 #endif //PULT_DISPLAY_H

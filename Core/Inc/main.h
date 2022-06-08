@@ -104,6 +104,12 @@ void Error_Handler(void);
 #define ButtonHotWater_EXTI_IRQn EXTI9_5_IRQn
 #define Usart1_CS_RS485_Pin GPIO_PIN_11
 #define Usart1_CS_RS485_GPIO_Port GPIOA
+#define TokenAcceptorChanel_3_Pin GPIO_PIN_8
+#define TokenAcceptorChanel_3_GPIO_Port GPIOB
+#define TokenAcceptorChanel_2_Pin GPIO_PIN_9
+#define TokenAcceptorChanel_2_GPIO_Port GPIOB
+#define TokenAcceptorChanel_1_Pin GPIO_PIN_0
+#define TokenAcceptorChanel_1_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

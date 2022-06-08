@@ -23,8 +23,18 @@
 #define SET_BACKLIGHT_BUTTON_VOSK       0x08 // включение/выключение подсветки кнопки Воск
 #define SET_BACKLIGHT_BUTTON_OSMOS      0x09 // включение/выключение подсветки кнопки Осмос
 #define SET_BACKLIGHT_BUTTON_STOP       0x0A // включение/выключение подсветки кнопки Стоп
-#define PUSH_BUTTON_FUNCTIONS           0x0B // Нажата кнопка выбора программы (воск, осмос, пена и др.)
+#define PUSH_BUTTON_INSECT              0x0B // Нажата кнопка Средство от насекомых
 #define PUSH_BUTTON_COLLECTION          0x0C // Нажата кнопка Инкассация
 #define SET_DISPLAY_NUMBER              0x0D // Установка значения на дисплее
+#define PUSH_JETTON_CHANNEL_1           0x0E // Принят жетон по первому каналу
+#define PUSH_JETTON_CHANNEL_2           0x0F // Принят жетон по 2 каналу
+#define PUSH_JETTON_CHANNEL_3           0x10 // Принят жетон по 3 каналу
+#define PUSH_BUTTON_FOAM                0x11 // Нажата кнопка Пена
+#define PUSH_BUTTON_FOAM_WATER          0x12 // Нажата кнопка Пена + вода
+#define PUSH_BUTTON_HOT_WATER           0x13 // Нажата кнопка Горячая вода
+#define PUSH_BUTTON_COOL_WATER          0x14 // Нажата кнопка Холодная вода
+#define PUSH_BUTTON_VOSK                0x15 // Нажата кнопка Воск
+#define PUSH_BUTTON_OSMOS               0x16 // Нажата кнопка Осмос
+#define PUSH_BUTTON_STOP                0x17 // Нажата кнопка Стоп
 
 #endif //PULT_GLOBALSETTINGS_H

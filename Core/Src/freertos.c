@@ -52,13 +52,23 @@
 /* USER CODE BEGIN Variables */
 extern uint8_t tx_usart1_data[BUF_LEN];
 extern uint8_t rx_usart1_data[BUF_LEN];
+bool jettonChanel_1 = false;
+bool jettonChanel_2 = false;
+bool jettonChanel_3 = false;
 /* USER CODE END Variables */
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .stack_size = 1024 * 4,
+/* Definitions for MainTask */
+osThreadId_t MainTaskHandle;
+const osThreadAttr_t MainTask_attributes = {
+  .name = "MainTask",
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for JettonAcceptor */
+osThreadId_t JettonAcceptorHandle;
+const osThreadAttr_t JettonAcceptor_attributes = {
+  .name = "JettonAcceptor",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,6 +77,7 @@ const osThreadAttr_t defaultTask_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
+void StartTask02(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -98,8 +109,11 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* creation of MainTask */
+  MainTaskHandle = osThreadNew(StartDefaultTask, NULL, &MainTask_attributes);
+
+  /* creation of JettonAcceptor */
+  JettonAcceptorHandle = osThreadNew(StartTask02, NULL, &JettonAcceptor_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
@@ -150,6 +164,31 @@ void StartDefaultTask(void *argument)
         osDelay(30);
     }
   /* USER CODE END StartDefaultTask */
+}
+
+/* USER CODE BEGIN Header_StartTask02 */
+/**
+* @brief Function implementing the JetonAcceptor thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask02 */
+void StartTask02(void *argument)
+{
+  /* USER CODE BEGIN StartTask02 */
+    /* Infinite loop */
+    for(;;)
+    {
+        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_1_GPIO_Port, TokenAcceptorChanel_1_Pin) == GPIO_PIN_SET)
+            jettonChanel_1 = true;
+        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_2_GPIO_Port, TokenAcceptorChanel_2_Pin) == GPIO_PIN_SET)
+            jettonChanel_2 = true;
+        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_3_GPIO_Port, TokenAcceptorChanel_3_Pin) == GPIO_PIN_SET)
+            jettonChanel_3 = true;
+
+        osDelay(10);
+    }
+  /* USER CODE END StartTask02 */
 }
 
 /* Private application code --------------------------------------------------*/
