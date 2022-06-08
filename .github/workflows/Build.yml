@@ -20,7 +20,7 @@ jobs:
           release: '9-2019-q4'
   
     - name: Build Firmware
-      run: make
+      run: make STM32F407xx
       
     - name: Upload ELF
       uses: actions/upload-artifact@v2
