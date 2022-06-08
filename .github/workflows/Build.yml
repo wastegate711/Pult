@@ -2,7 +2,7 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ "addCiCd" ]
+    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
@@ -18,9 +18,10 @@ jobs:
       uses: fiam/arm-none-eabi-gcc@v1
       with:
           release: '9-2019-q4'
-      
+  
     - name: Build Firmware
-      run: make -j4
+      working-directory: ./buid
+      run: make
       
     - name: Upload ELF
       uses: actions/upload-artifact@v2
