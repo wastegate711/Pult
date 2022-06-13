@@ -19,10 +19,10 @@ jobs:
       with:
        release: '10-2020-q4' # The arm-none-eabi-gcc release to use
     
-   # - name: Set up MinGW
-   #   uses: egor-tensin/setup-mingw@v2
-   #   with:
-   #    platform: x64
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+       platform: x64
        
     - name: Build & Test
       uses: ashutoshvarma/action-cmake-build@master
