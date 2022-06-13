@@ -31,8 +31,8 @@ jobs:
       with:
           build-dir: ${{ runner.workspace }}/build
           # will set the CC & CXX for cmake
-          cc: gcc
-          cxx: g++
+          cc: C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\x86_64-w64-mingw32-gcc.exe
+          cxx: C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\x86_64-w64-mingw32-g++.exe
           build-type: Debug
           # Extra options pass to cmake while configuring project
           configure-options:
