@@ -14,17 +14,21 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: sudo apt update && sudo apt-get install gcc-10 libusb-1.0.0-dev libgtk-3-dev rpm && sudo apt install cmake
-      - name: cmake go to directory
-        run: cd /home/runner/work/Pult/Pult/
-      - name: cmake build
-        run: sudo cmake --build </home/runner/work/Pult/Pult/>
-      - name: make test
-        run: sudo make clean && make test
-      - name: make release
-        run: sudo make clean && make release
-      - name: sudo make install
-        run: sudo make clean && sudo make install
-      - name: sudo make package
-        run: sudo make package
-      - name: sudo make uninstall
-        run: sudo make uninstall && sudo make clean
+      - name: Build CMake
+      # You may pin to the exact commit or the version.
+      # uses: ashutoshvarma/action-cmake-build@0fbeeac8b1f9c8aef99e9eae9d78529ed3b0364b
+        uses: ashutoshvarma/action-cmake-build@v1
+        with:
+          # Build directory where build files will be generated
+          build-dir: ${{ runner.workspace }}/build
+          # CMake build type (Release, Debug, MinSizeRel, RelWithDebInfo)
+          build-type: Debug
+          # C Compiler for toolchain
+          cc: gcc
+          # C++ Compiler for toolchain
+          cxx: g++
+          # CMake build target
+          target: Pult.elf
+          # Number of concurrent jobs for build and test
+
+          
