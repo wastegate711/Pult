@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: sudo apt update && sudo apt-get install gcc-10 libusb-1.0.0-dev libgtk-3-dev rpm && sudo apt install cmake
+        run: sudo apt update && sudo apt-get install gcc-10 libusb-1.0.0-dev libgtk-3-dev rpm
       - name: Build CMake
       # You may pin to the exact commit or the version.
       # uses: ashutoshvarma/action-cmake-build@0fbeeac8b1f9c8aef99e9eae9d78529ed3b0364b
@@ -24,9 +24,9 @@ jobs:
           # CMake build type (Release, Debug, MinSizeRel, RelWithDebInfo)
           build-type: Debug
           # C Compiler for toolchain
-          cc: gcc
+          cc: arm-none-eabi-gcc
           # C++ Compiler for toolchain
-          cxx: g++
+          cxx: arm-none-eabi-g++
           # CMake build target
           target: Pult.elf
           # Number of concurrent jobs for build and test
