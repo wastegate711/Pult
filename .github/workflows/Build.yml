@@ -17,7 +17,7 @@ jobs:
       - name: cmake go to directory
         run: cd /home/runner/work/Pult/Pult/
       - name: cmake build
-        run: sudo cmake --build
+        run: sudo cmake --build </home/runner/work/Pult/Pult/>
       - name: make test
         run: sudo make clean && make test
       - name: make release
