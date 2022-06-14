@@ -7,44 +7,22 @@ on:
     branches: [ "develop" ]
 
 jobs:
-  build:
-
-    runs-on: windows-latest
-    environment: CC=arm-none-aebi-gcc
-
+ job_linux_20_04_64_gcc:
+    name: ubuntu-20.04 gcc
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: arm-none-eabi-gcc
-      uses: fiam/arm-none-eabi-gcc@v1
-      with:
-       release: '10-2020-q4' # The arm-none-eabi-gcc release to use
-    
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v2
-      with:
-       platform: x64
-       packages: cmake gcc-g++
-       
-    - name: Build & Test
-      uses: ashutoshvarma/action-cmake-build@master
-      with:
-          build-dir: ${{ runner.workspace }}/build
-          # will set the CC & CXX for cmake
-          cc: C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\x86_64-w64-mingw32-gcc.exe
-          cxx: C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\x86_64-w64-mingw32-g++.exe
-          build-type: Debug
-          buildig-for: mingw32-make
-          # Extra options pass to cmake while configuring project
-          configure-options:
-            -DPNG_INCLUDE=OFF
-            -DCMAKE_DEPENDS_USE_COMPILER=FALSE
-            -DCMAKE_C_COMPILER=C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\x86_64-w64-mingw32-gcc.exe
-            -DCMAKE_CXX_COMPILER=C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\x86_64-w64-mingw32-g++.exe
-            
-          #run-test: true
-          #ctest-options: -R mytest
-          # install the build using cmake --install
-          #install-build: true
-          # run build using '-j [parallel]' to use multiple threads to build
-         # parallel: 14
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt update && sudo apt-get install gcc-10 libusb-1.0.0-dev libgtk-3-dev rpm
+      - name: make debug
+        run: sudo make clean && make debug
+      - name: make test
+        run: sudo make clean && make test
+      - name: make release
+        run: sudo make clean && make release
+      - name: sudo make install
+        run: sudo make clean && sudo make install
+      - name: sudo make package
+        run: sudo make package
+      - name: sudo make uninstall
+        run: sudo make uninstall && sudo make clean
