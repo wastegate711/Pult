@@ -76,6 +76,8 @@ void GetUID(void)
     crc = GetCrc16(tx_usart1_data, tx_usart1_data[3] - 2);
     tx_usart1_data[16] = crc >> 8;
     tx_usart1_data[17] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[3]);
 }
 
 /**

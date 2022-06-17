@@ -183,9 +183,9 @@ void EXTI9_5_IRQHandler(void)
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
   /* USER CODE END EXTI9_5_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(ButtonCoolWater_Pin);
   HAL_GPIO_EXTI_IRQHandler(ButtonHotWater_Pin);
-  HAL_GPIO_EXTI_IRQHandler(ButtonOsmos_Pin);
+  HAL_GPIO_EXTI_IRQHandler(ButtonCoolWater_Pin);
+  HAL_GPIO_EXTI_IRQHandler(ButtonStop_Pin);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
   /* USER CODE END EXTI9_5_IRQn 1 */
@@ -227,7 +227,7 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(ButtonStop_Pin);
+  HAL_GPIO_EXTI_IRQHandler(ButtonOsmos_Pin);
   HAL_GPIO_EXTI_IRQHandler(ButtonVosk_Pin);
   HAL_GPIO_EXTI_IRQHandler(ButtonInsect_Pin);
   HAL_GPIO_EXTI_IRQHandler(ButtonFoam_Pin);

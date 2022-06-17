@@ -135,7 +135,8 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-
+    osDelay(2000);
+    DisplayNumber(711);
     /* Infinite loop */
     for(;;)
     {
@@ -179,11 +180,11 @@ void StartTask02(void *argument)
     /* Infinite loop */
     for(;;)
     {
-        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_1_GPIO_Port, TokenAcceptorChanel_1_Pin) == GPIO_PIN_SET)
+        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_1_GPIO_Port, TokenAcceptorChanel_1_Pin) == GPIO_PIN_RESET)
             jettonChanel_1 = true;
-        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_2_GPIO_Port, TokenAcceptorChanel_2_Pin) == GPIO_PIN_SET)
+        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_2_GPIO_Port, TokenAcceptorChanel_2_Pin) == GPIO_PIN_RESET)
             jettonChanel_2 = true;
-        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_3_GPIO_Port, TokenAcceptorChanel_3_Pin) == GPIO_PIN_SET)
+        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_3_GPIO_Port, TokenAcceptorChanel_3_Pin) == GPIO_PIN_RESET)
             jettonChanel_3 = true;
 
         osDelay(10);
