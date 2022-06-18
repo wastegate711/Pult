@@ -174,6 +174,15 @@ void SetStateBacklightButtonOsmos(uint8_t state)
  */
 void SetStateBacklightButtonStop(uint8_t state)
 {
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = SET_BACKLIGHT_BUTTON_STOP;
+    tx_usart1_data[3] = 0x07;
+    tx_usart1_data[4] = state;
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[3] - 2);
+    tx_usart1_data[5] = crc >> 8;
+    tx_usart1_data[6] = crc;
+
     if(state == 0x01)
         SetBacklightButtonStop(GPIO_PIN_SET);
     else if(state == 0x00)
@@ -275,7 +284,7 @@ void GetSoftwareVersion(void)
     tx_usart1_data[3] = 0x08;
     tx_usart1_data[4] = SOFTWARE_VERSION_MAJOR;
     tx_usart1_data[5] = SOFTWARE_VERSION_MINOR;
-    crc = GetCrc16(tx_usart1_data, tx_usart1_data[3]);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[3] - 2);
     tx_usart1_data[6] = crc >> 8;
     tx_usart1_data[7] = crc;
 
