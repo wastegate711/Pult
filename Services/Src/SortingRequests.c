@@ -44,5 +44,8 @@ void IncomingRequest(const uint8_t *data)
         case SET_DISPLAY_NUMBER: // установка значения на дисплее
             SetDisplayNumber(data);
             break;
+        case GET_SOFTWARE_VERSION: // Запрос версии программы
+            GetSoftwareVersion();
+            break;
     }
 }

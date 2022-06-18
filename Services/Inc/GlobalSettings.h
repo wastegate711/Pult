@@ -11,6 +11,8 @@
 // Настройки.
 #define RECEIV_LEN   255 //максимальная длина принимаемой посылки.
 #define UID_BASE_ADDRESS        0x1FFF7A10 //Начальный адрес UID
+#define SOFTWARE_VERSION_MAJOR  0x00 // Версия программы старший байт до точки (*.1)
+#define SOFTWARE_VERSION_MINOR  0x01 // Версия программы младший байт после точки (1.*)
 
 // Команды
 #define GET_STATUS                      0x01 // запрос текущего состояния
@@ -36,5 +38,8 @@
 #define PUSH_BUTTON_VOSK                0x28 // Нажата кнопка Воск
 #define PUSH_BUTTON_OSMOS               0x29 // Нажата кнопка Осмос
 #define PUSH_BUTTON_STOP                0x2A // Нажата кнопка Стоп
+#define GET_SOFTWARE_VERSION            0x2B // Запрос версии программы
+#define UID_FLAG_RESET                  0x2C // UID не запрашивался ведущим
+#define SOFTWARE_FLAG_RESET             0x2D // Версия программы не запрашивалась
 
 #endif //PULT_GLOBALSETTINGS_H
