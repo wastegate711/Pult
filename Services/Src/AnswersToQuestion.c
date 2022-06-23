@@ -3,7 +3,11 @@
 uint8_t GetStatePeripheral(void);
 
 extern uint8_t tx_usart1_data[BUF_LEN];
+//флаги состояния Устройства
+bool getUidFlag = false; // запрашивался UID или нет
+bool getSoftwareFlag = false; // запрашивалась версия программы или нет
 //флаги монетоприемника
+extern bool lockCoinAcceptorFlag;
 extern bool jettonChanel_1;
 extern bool jettonChanel_2;
 extern bool jettonChanel_3;
@@ -53,6 +57,7 @@ void GetStatus(void)
  */
 void GetUID(void)
 {
+    getUidFlag = true;
     uint32_t serialNumberPart1 = ReadFlash(UID_BASE_ADDRESS);
     uint32_t serialNumberPart2 = ReadFlash(UID_BASE_ADDRESS + 4);
     uint32_t serialNumberPart3 = ReadFlash(UID_BASE_ADDRESS + 8);
@@ -170,6 +175,15 @@ void SetStateBacklightButtonOsmos(uint8_t state)
  */
 void SetStateBacklightButtonStop(uint8_t state)
 {
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = SET_BACKLIGHT_BUTTON_STOP;
+    tx_usart1_data[3] = 0x07;
+    tx_usart1_data[4] = state;
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[3] - 2);
+    tx_usart1_data[5] = crc >> 8;
+    tx_usart1_data[6] = crc;
+
     if(state == 0x01)
         SetBacklightButtonStop(GPIO_PIN_SET);
     else if(state == 0x00)
@@ -183,13 +197,10 @@ void SetStateBacklightButtonStop(uint8_t state)
 void SetDisplayNumber(const uint8_t *pData)
 {
     uint32_t number = pData[4];
-    number << 8;
+    (uint32_t)number << 8;
     number = pData[5];
-    number << 8;
-    number = pData[6];
-    number << 8;
-    number = pData[7];
-    DisplayNumber(number);
+
+    DisplayNumber(ConvertDigits(pData));
 }
 
 /**
@@ -198,6 +209,14 @@ void SetDisplayNumber(const uint8_t *pData)
  */
 uint8_t GetStatePeripheral(void)
 {
+    // проверка флагов состояния
+    if(!getUidFlag) // если флаг сброшен значит еще не запрашивался серийный номер
+    {
+        return UID_FLAG_RESET;
+    } else if(!getSoftwareFlag) // если флаг сброшен значит еще не запрашивалась версия программы
+    {
+        return SOFTWARE_FLAG_RESET;
+    }
     // Проверка в какой канал жетоноприемка был проброшен жетон
     if(jettonChanel_1)
     {
@@ -220,33 +239,64 @@ uint8_t GetStatePeripheral(void)
         return PUSH_BUTTON_INSECT;
     } else if(buttonFoamFlag)
     {
-        buttonFoamFlag=false;
+        buttonFoamFlag = false;
         return PUSH_BUTTON_FOAM;
     } else if(buttonFoamWaterFlag)
     {
-        buttonFoamWaterFlag=false;
+        buttonFoamWaterFlag = false;
         return PUSH_BUTTON_FOAM_WATER;
     } else if(buttonHotWaterFlag)
     {
-        buttonHotWaterFlag=false;
+        buttonHotWaterFlag = false;
         return PUSH_BUTTON_HOT_WATER;
     } else if(buttonCoolWaterFlag)
     {
-        buttonCoolWaterFlag=false;
+        buttonCoolWaterFlag = false;
         return PUSH_BUTTON_COOL_WATER;
     } else if(buttonVoskFlag)
     {
-        buttonVoskFlag=false;
+        buttonVoskFlag = false;
         return PUSH_BUTTON_VOSK;
     } else if(buttonOsmosFlag)
     {
-        buttonOsmosFlag=false;
+        buttonOsmosFlag = false;
         return PUSH_BUTTON_OSMOS;
     } else if(buttonStopFlag)
     {
-        buttonStopFlag=false;
+        buttonStopFlag = false;
         return PUSH_BUTTON_STOP;
     }
 
     return GET_STATUS;
+}
+
+/**
+ * Возвращает версию программы.
+ */
+void GetSoftwareVersion(void)
+{
+    getSoftwareFlag = true;
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_SOFTWARE_VERSION;
+    tx_usart1_data[3] = 0x08;
+    tx_usart1_data[4] = SOFTWARE_VERSION_MAJOR;
+    tx_usart1_data[5] = SOFTWARE_VERSION_MINOR;
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[3] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[3]);
+}
+
+/**
+ * Упраление блокировкой монетоприемника.
+ * @param state Если 1-монетоприемник заблокирован, 0-разблокирован.
+ */
+void LockCoinAcceptor(uint8_t state)
+{
+    if(state == 1)
+        lockCoinAcceptorFlag = true;
+    else if(state == 0)
+        lockCoinAcceptorFlag = false;
 }

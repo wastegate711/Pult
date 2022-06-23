@@ -13,7 +13,7 @@ void DisplayInit(void)
     DisplaySendData(OP_DISPLAYTEST, 0);   //выключаем тестирование дисплея что бы не светился по чём зря.
     DisplaySendData(OP_SHUTDOWN, 1);  //выводим из ждущего режима
     DisplaySendData(OP_INTENSITY, INTENSITY_HIGH);    //устанавливаем интенсивность свечения
-    DisplaySendData(OP_SCANLIMIT, SCANLIMIT);    //указываем нужное количество дисплеев, которые будут работать.
+    DisplaySendData(OP_SCANLIMIT, SCANLIMIT_3);    //указываем нужное количество дисплеев, которые будут работать.
     DisplaySendData(OP_DECODEMODE,
                     DECODEMODE);    //включаем режим декодирования т.к. работаем не с матрицой светодиодов, а с 7-сегментным дисплеем
     DisplaySendData(OP_DIGIT0, 1);   //
@@ -32,6 +32,20 @@ void DisplayInit(void)
  */
 void DisplayNumber(volatile uint32_t number)
 {
+    if(number > 999)
+    {
+        DisplaySendData(OP_SCANLIMIT, SCANLIMIT_3);
+    } else if(number > 99)
+    {
+        DisplaySendData(OP_SCANLIMIT, 2);
+    } else if(number > 9)
+    {
+        DisplaySendData(OP_SCANLIMIT, 1);
+    } else
+    {
+        DisplaySendData(OP_SCANLIMIT, 0);
+    }
+
     DisplaySendData(8, number / 10000000);
     DisplaySendData(7, (number / 1000000) % 10);
     DisplaySendData(6, (number / 100000) % 10);

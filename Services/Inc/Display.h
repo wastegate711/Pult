@@ -7,7 +7,7 @@
 #include "cmsis_os2.h"
 
 //OPTIONS
-#define SCANLIMIT 0x03
+#define SCANLIMIT_3 0x03
 #define INTENSITY_HIGH 12
 #define INTENSITY_MED 7
 #define INTENSITY_LOW 3
