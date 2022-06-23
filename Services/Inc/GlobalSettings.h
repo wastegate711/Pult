@@ -41,5 +41,6 @@
 #define GET_SOFTWARE_VERSION            0x2B // Запрос версии программы
 #define UID_FLAG_RESET                  0x2C // UID не запрашивался ведущим
 #define SOFTWARE_FLAG_RESET             0x2D // Версия программы не запрашивалась
+#define LOCK_COIN_ACCEPTOR              0x2E // Управление блокировкой монетоприемника
 
 #endif //PULT_GLOBALSETTINGS_H

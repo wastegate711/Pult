@@ -47,5 +47,8 @@ void IncomingRequest(const uint8_t *data)
         case GET_SOFTWARE_VERSION: // Запрос версии программы
             GetSoftwareVersion();
             break;
+        case LOCK_COIN_ACCEPTOR: // Управление блокировкой монетоприемника
+            LockCoinAcceptor(data[4]);
+            break;
     }
 }

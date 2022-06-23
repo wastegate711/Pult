@@ -7,6 +7,7 @@ extern uint8_t tx_usart1_data[BUF_LEN];
 bool getUidFlag = false; // запрашивался UID или нет
 bool getSoftwareFlag = false; // запрашивалась версия программы или нет
 //флаги монетоприемника
+extern bool lockCoinAcceptorFlag;
 extern bool jettonChanel_1;
 extern bool jettonChanel_2;
 extern bool jettonChanel_3;
@@ -196,13 +197,10 @@ void SetStateBacklightButtonStop(uint8_t state)
 void SetDisplayNumber(const uint8_t *pData)
 {
     uint32_t number = pData[4];
-    number << 8;
+    (uint32_t)number << 8;
     number = pData[5];
-    number << 8;
-    number = pData[6];
-    number << 8;
-    number = pData[7];
-    DisplayNumber(number);
+
+    DisplayNumber(ConvertDigits(pData));
 }
 
 /**
@@ -212,10 +210,10 @@ void SetDisplayNumber(const uint8_t *pData)
 uint8_t GetStatePeripheral(void)
 {
     // проверка флагов состояния
-    if(!getUidFlag)
+    if(!getUidFlag) // если флаг сброшен значит еще не запрашивался серийный номер
     {
         return UID_FLAG_RESET;
-    } else if(!getSoftwareFlag)
+    } else if(!getSoftwareFlag) // если флаг сброшен значит еще не запрашивалась версия программы
     {
         return SOFTWARE_FLAG_RESET;
     }
@@ -289,4 +287,16 @@ void GetSoftwareVersion(void)
     tx_usart1_data[7] = crc;
 
     SendDataUsart1(tx_usart1_data, tx_usart1_data[3]);
+}
+
+/**
+ * Упраление блокировкой монетоприемника.
+ * @param state Если 1-монетоприемник заблокирован, 0-разблокирован.
+ */
+void LockCoinAcceptor(uint8_t state)
+{
+    if(state == 1)
+        lockCoinAcceptorFlag = true;
+    else if(state == 0)
+        lockCoinAcceptorFlag = false;
 }

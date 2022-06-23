@@ -55,6 +55,7 @@ extern uint8_t rx_usart1_data[BUF_LEN];
 bool jettonChanel_1 = false;
 bool jettonChanel_2 = false;
 bool jettonChanel_3 = false;
+bool lockCoinAcceptorFlag = false;
 /* USER CODE END Variables */
 /* Definitions for MainTask */
 osThreadId_t MainTaskHandle;
@@ -180,12 +181,15 @@ void StartTask02(void *argument)
     /* Infinite loop */
     for(;;)
     {
-        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_1_GPIO_Port, TokenAcceptorChanel_1_Pin) == GPIO_PIN_RESET)
-            jettonChanel_1 = true;
-        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_2_GPIO_Port, TokenAcceptorChanel_2_Pin) == GPIO_PIN_RESET)
-            jettonChanel_2 = true;
-        if(HAL_GPIO_ReadPin(TokenAcceptorChanel_3_GPIO_Port, TokenAcceptorChanel_3_Pin) == GPIO_PIN_RESET)
-            jettonChanel_3 = true;
+        if(!lockCoinAcceptorFlag) // если флаг сброшен, то опрашиваем монетоприемник.
+        {
+            if(HAL_GPIO_ReadPin(TokenAcceptorChanel_1_GPIO_Port, TokenAcceptorChanel_1_Pin) == GPIO_PIN_RESET)
+                jettonChanel_1 = true;
+            if(HAL_GPIO_ReadPin(TokenAcceptorChanel_2_GPIO_Port, TokenAcceptorChanel_2_Pin) == GPIO_PIN_RESET)
+                jettonChanel_2 = true;
+            if(HAL_GPIO_ReadPin(TokenAcceptorChanel_3_GPIO_Port, TokenAcceptorChanel_3_Pin) == GPIO_PIN_RESET)
+                jettonChanel_3 = true;
+        }
 
         osDelay(10);
     }
