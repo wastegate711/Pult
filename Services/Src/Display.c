@@ -79,7 +79,7 @@ void DisplaySendData(uint8_t reg, uint8_t data)
 uint32_t ConvertDigits(const uint8_t *pDAta)
 {
     uint16_t part1 = 256;
-    uint32_t result = part1 * pDAta[4] + pDAta[5];
+    uint32_t result = part1 * pDAta[5] + pDAta[6];
 
     return result;
 }

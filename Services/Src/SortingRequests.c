@@ -1,5 +1,16 @@
 #include "SortingRequests.h"
 
+/*
+         * Формат сообщений
+         * [0] = [адрес ведущего 1 байт]
+         * [1] = [адрес ведомого 1 байт]
+         * [2] = [команда 1 байт]
+         * [3] = [Номер сообщения 1 байт]
+         * [4] = [длина сообщения 1 байт]
+         * [5] = [данные 0-251 байт]
+         * [6-7] = [CRC16-2 байта]
+         */
+
 extern uint8_t tx_usart1_data[BUF_LEN];
 extern uint32_t displayCount;
 
@@ -9,6 +20,8 @@ extern uint32_t displayCount;
  */
 void IncomingRequest(const uint8_t *data)
 {
+    SetMessageCounter(data[3]);
+
     switch(data[2])
     {
         case GET_STATUS: //запрос текущего состояния
@@ -18,28 +31,28 @@ void IncomingRequest(const uint8_t *data)
             GetUID();
             break;
         case SET_BACKLIGHT_BUTTON_INSECT: //установка подсветки кнопки Средство от насекомых
-            SetStateBacklightButtonInsect(data[4]);
+            SetStateBacklightButtonInsect(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_FOAM: //установка подсветки кнопки Пена
-            SetStateBacklightButtonFoam(data[4]);
+            SetStateBacklightButtonFoam(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_FOAM_WATER: //установка подсветки кнопки Пена+вода
-            SetStateBacklightButtonFoamWater(data[4]);
+            SetStateBacklightButtonFoamWater(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_HOT_WATER: //установка подсветки кнопки Горячая вода
-            SetStateBacklightButtonHotWater(data[4]);
+            SetStateBacklightButtonHotWater(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_COOL_WATER: //установка подсветки кнопки Холодная вода
-            SetStateBacklightButtonCoolWater(data[4]);
+            SetStateBacklightButtonCoolWater(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_VOSK: //установка подсветки кнопки Воск
-            SetStateBacklightButtonVosk(data[4]);
+            SetStateBacklightButtonVosk(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_OSMOS: //установка подсветки кнопки Осмос
-            SetStateBacklightButtonOsmos(data[4]);
+            SetStateBacklightButtonOsmos(data[5]);
             break;
         case SET_BACKLIGHT_BUTTON_STOP: //установка подсветки кнопки Стоп
-            SetStateBacklightButtonStop(data[4]);
+            SetStateBacklightButtonStop(data[5]);
             break;
         case SET_DISPLAY_NUMBER: // установка значения на дисплее
             SetDisplayNumber(data);
@@ -48,7 +61,7 @@ void IncomingRequest(const uint8_t *data)
             GetSoftwareVersion();
             break;
         case LOCK_COIN_ACCEPTOR: // Управление блокировкой монетоприемника
-            LockCoinAcceptor(data[4]);
+            LockCoinAcceptor(data[5]);
             break;
     }
 }
