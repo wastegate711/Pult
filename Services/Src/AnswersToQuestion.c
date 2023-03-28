@@ -188,6 +188,18 @@ void SetStateBacklightButtonVosk(uint8_t state)
         SetBacklightButtonVosk(GPIO_PIN_SET);
     else if(state == 0x00)
         SetBacklightButtonVosk(GPIO_PIN_RESET);
+
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = SET_BACKLIGHT_BUTTON_STOP;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = state;
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
 }
 
 /**
