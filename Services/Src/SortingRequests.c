@@ -63,5 +63,29 @@ void IncomingRequest(const uint8_t *data)
         case LOCK_COIN_ACCEPTOR: // Управление блокировкой монетоприемника
             LockCoinAcceptor(data[5]);
             break;
+        case GET_BACKLIGHT_BUTTON_INSECT: // Запрос состояния подсветки кнопки Средство от насекомых
+            GetStateBacklightButtonInsect();
+            break;
+        case GET_BACKLIGHT_BUTTON_FOAM: // Запрос состояния подсветки кнопки Пена
+            GetStateBacklightButtonFoam();
+            break;
+        case GET_BACKLIGHT_BUTTON_FOAM_WATER: // Запрос состояния подсветки кнопки Пена + Вода
+            GetStateBacklightButtonFoamWater();
+            break;
+        case GET_BACKLIGHT_BUTTON_HOT_WATER: // Запрос состояния подсветки кнопки Горячая вода
+            GetStateBacklightButtonHotWater();
+            break;
+        case GET_BACKLIGHT_BUTTON_COOL_WATER: // Запрос состояния подсветки кнопки Холодная вода
+            GetStateBacklightButtonCoolWater();
+            break;
+        case GET_BACKLIGHT_BUTTON_VOSK: // Запрос состояния подсветки кнопки Воск
+            GetStateBacklightButtonVosk();
+            break;
+        case GET_BACKLIGHT_BUTTON_OSMOS: // Запрос состояния подсветки кнопки Осмос
+            GetStateBacklightButtonOsmos();
+            break;
+        case GET_BACKLIGHT_BUTTON_STOP: // Запрос состояния подсветки кнопки Стоп
+            GetStateBacklightButtonStop();
+            break;
     }
 }

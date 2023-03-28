@@ -349,3 +349,155 @@ void LockCoinAcceptor(uint8_t state)
     else if(state == 0)
         lockCoinAcceptorFlag = false;
 }
+
+/**
+ * Считывает состояние подсветки кнопки Средство от насекомых
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonInsect(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_INSECT;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedInsect_GPIO_Port,LedInsect_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки кнопки Пена
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonFoam(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_FOAM;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedFoam_GPIO_Port,LedFoam_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки Пена + Вода
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonFoamWater(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_FOAM_WATER;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedFoamWater_GPIO_Port,LedFoamWater_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки Горячая вода
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonHotWater(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_HOT_WATER;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedHotWater_GPIO_Port,LedHotWater_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки Холодная вода
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonCoolWater(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_COOL_WATER;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedCoolWater_GPIO_Port,LedCoolWater_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки Воск
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonVosk(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_VOSK;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedVosk_GPIO_Port,LedVosk_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки Осмос
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonOsmos(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_OSMOS;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedOsmos_GPIO_Port,LedOsmos_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}
+
+/**
+ * Считывает состояние подсветки Стоп
+ *  0-выключена / 1-включена.
+ */
+void GetStateBacklightButtonStop(void)
+{
+    tx_usart1_data[0] = MASTER_ADDRESS;
+    tx_usart1_data[1] = PULT_BLOCK_ADDRESS;
+    tx_usart1_data[2] = GET_BACKLIGHT_BUTTON_STOP;
+    tx_usart1_data[3] = GetMessageCounter();
+    tx_usart1_data[4] = 0x08;
+    tx_usart1_data[5] = HAL_GPIO_ReadPin(LedStop_GPIO_Port,LedStop_Pin);
+    crc = GetCrc16(tx_usart1_data, tx_usart1_data[4] - 2);
+    tx_usart1_data[6] = crc >> 8;
+    tx_usart1_data[7] = crc;
+
+    SendDataUsart1(tx_usart1_data, tx_usart1_data[4]);
+}

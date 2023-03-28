@@ -24,5 +24,13 @@ void GetSoftwareVersion(void);
 void LockCoinAcceptor(uint8_t state);
 void SetMessageCounter(uint8_t number);
 uint8_t GetMessageCounter();
+void GetStateBacklightButtonInsect(void);
+void GetStateBacklightButtonFoam(void);
+void GetStateBacklightButtonFoamWater(void);
+void GetStateBacklightButtonHotWater(void);
+void GetStateBacklightButtonCoolWater(void);
+void GetStateBacklightButtonVosk(void);
+void GetStateBacklightButtonOsmos(void);
+void GetStateBacklightButtonStop(void);
 
 #endif //PULT_ANSWERTOQUESTION_H

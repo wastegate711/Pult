@@ -42,5 +42,13 @@
 #define UID_FLAG_RESET                  0x2C // UID не запрашивался ведущим
 #define SOFTWARE_FLAG_RESET             0x2D // Версия программы не запрашивалась
 #define LOCK_COIN_ACCEPTOR              0x2E // Управление блокировкой монетоприемника
+#define GET_BACKLIGHT_BUTTON_INSECT     0x2F // Запрос состояния подсветки кнопки Средство от насекомых
+#define GET_BACKLIGHT_BUTTON_FOAM       0x30 // Запрос состояния подсветки кнопки Пена
+#define GET_BACKLIGHT_BUTTON_FOAM_WATER 0x31 // Запрос состояния подсветки кнопки Пена + вода
+#define GET_BACKLIGHT_BUTTON_HOT_WATER  0x32 // Запрос состояния подсветки кнопки Горячая вода
+#define GET_BACKLIGHT_BUTTON_COOL_WATER 0x33 // Запрос состояния подсветки кнопки Холодная вода
+#define GET_BACKLIGHT_BUTTON_VOSK       0x34 // Запрос состояния подсветки кнопки Воск
+#define GET_BACKLIGHT_BUTTON_OSMOS      0x35 // Запрос состояния подсветки кнопки Осмос
+#define GET_BACKLIGHT_BUTTON_STOP       0x36 // Запрос состояния подсветки кнопки Стоп
 
 #endif //PULT_GLOBALSETTINGS_H
