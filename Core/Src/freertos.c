@@ -56,6 +56,7 @@ bool jettonChanel_1 = false;
 bool jettonChanel_2 = false;
 bool jettonChanel_3 = false;
 bool lockCoinAcceptorFlag = false;
+uint8_t messageCounter;
 /* USER CODE END Variables */
 /* Definitions for MainTask */
 osThreadId_t MainTaskHandle;
@@ -136,6 +137,17 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
+  // Основной поток.
+    /*
+           * Формат сообщений
+           * [0] = [адрес ведущего 1 байт]
+           * [1] = [адрес ведомого 1 байт]
+           * [2] = [команда 1 байт]
+           * [3] = [Номер сообщения 1 байт]
+           * [4] = [длина сообщения 1 байт]
+           * [5] = [данные 0-251 байт]
+           * [6-7] = [CRC16-2 байта]
+           */
     osDelay(2000);
     DisplayNumber(711);
     /* Infinite loop */
@@ -145,7 +157,7 @@ void StartDefaultTask(void *argument)
         {
             if(rx_usart1_data[0] == MASTER_ADDRESS &&
                rx_usart1_data[1] == PULT_BLOCK_ADDRESS &&
-               rx_usart1_data[3] == RECEIV_LEN - huart1.RxXferCount)
+               rx_usart1_data[4] == RECEIV_LEN - huart1.RxXferCount)
             {
                 if(CompareCrc16(rx_usart1_data) == 1)
                 {
@@ -178,6 +190,7 @@ void StartDefaultTask(void *argument)
 void StartTask02(void *argument)
 {
   /* USER CODE BEGIN StartTask02 */
+  // Поток опрашивает монетоприемник.
     /* Infinite loop */
     for(;;)
     {

@@ -22,5 +22,7 @@ void SetStateBacklightButtonInsect(uint8_t state);
 void SetDisplayNumber(const uint8_t *pData);
 void GetSoftwareVersion(void);
 void LockCoinAcceptor(uint8_t state);
+void SetMessageCounter(uint8_t number);
+uint8_t GetMessageCounter();
 
 #endif //PULT_ANSWERTOQUESTION_H

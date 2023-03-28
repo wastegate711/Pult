@@ -1,5 +1,16 @@
 #include "Crc16.h"
 
+/*
+         * Формат сообщений
+         * [0] = [адрес ведущего 1 байт]
+         * [1] = [адрес ведомого 1 байт]
+         * [2] = [команда 1 байт]
+         * [3] = [Номер сообщения 1 байт]
+         * [4] = [длина сообщения 1 байт]
+         * [5] = [данные 0-251 байт]
+         * [6-7] = [CRC16-2 байта]
+         */
+
 uint16_t crcTable[] =
         {
                 0x0000, 0x1189, 0x2312, 0x329B, 0x4624, 0x57AD, 0x6536, 0x74BF,
@@ -48,9 +59,9 @@ uint16_t GetCrc16(uint8_t *data, int length)
     uint16_t crc = 0;
     int index = 0;
 
-    while(length-- > 0)
+    while (length-- > 0)
     {
-        crc = (uint16_t)((crc >> 8) ^ crcTable[(crc ^ data[index++]) & 0xFF]);
+        crc = (uint16_t) ((crc >> 8) ^ crcTable[(crc ^ data[index++]) & 0xFF]);
     }
 
     return crc;
@@ -63,17 +74,27 @@ uint16_t GetCrc16(uint8_t *data, int length)
  */
 uint8_t CompareCrc16(uint8_t *Buf)//функция сравнения CRC
 {
-    uint16_t Compare = 0;
+    volatile uint16_t Compare = 0;
     uint8_t Len = 0;
     uint8_t a[2];
     uint8_t b[2];
     uint8_t Dostup = 0;
-    if(Buf[3] > 4)
+
+ /*   if (Buf[4] > 4)
     {
-        Compare = GetCrc16(Buf, Buf[3] - 2);
+        Compare = GetCrc16(Buf, Buf[4]);
+        Len = Buf[4];
+        if (Compare >> 8 == Buf[Len - 2] && Compare == Buf[Len - 1])
+        {
+            Dostup = 1;
+        }
+    }*/
+    if(Buf[4] > 4)
+    {
+        Compare = GetCrc16(Buf, Buf[4] - 2);
         a[0] = Compare >> 8;
         a[1] = Compare;
-        Len = Buf[3];
+        Len = Buf[4];
         Len = Len - 1;
         b[1] = Buf[Len];
         Len = Len - 1;
